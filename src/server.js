@@ -10,6 +10,7 @@ const logger = morgan("dev");
 
 //뷰 엔진
 app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views");
 
 //로그관리 
 app.use(logger);
