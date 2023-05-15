@@ -4,7 +4,35 @@ const fakeUser = {
 }
 
 export const trending = (req, res) => {
-  return res.render("home", {pageTitle:"home", fakeUser});
+
+  const videos = [
+    {
+      title:"First Video",
+      rating:5,
+      comments:2,
+      createdAt: "12분 전",
+      views:10,
+      id:1,
+    },
+    {
+      title:"Second Video",
+      rating:5,
+      comments:2,
+      createdAt: "12분 전",
+      views:10,
+      id:1,
+    },
+    {
+      title:"Third Video",
+      rating:5,
+      comments:2,
+      createdAt: "12분 전",
+      views:10,
+      id:1,
+    },
+  ];
+
+  return res.render("home", {pageTitle:"home", fakeUser, videos});
 };
 
 export const search = (req, res) => {
