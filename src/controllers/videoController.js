@@ -1,8 +1,8 @@
 import Video from "../models/Video";
 
-const fakeUser = {
+export const fakeUser = {
   userName : "yhwa",
-  loggedIn : true,
+  loggedIn : false,
 };
 
 export const home = async (req, res) => {
