@@ -11,10 +11,12 @@ html(lang="ko")
         ul
           li
               a(href="/") Home
+          li
+              a(href="/search") Search
 
           if fakeUser.loggedIn
             li
-              a(href="/videos/upload") Upload Video
+              a(href="/videos/upload") Upload
             li
               a(href="/logout") Logout
           else 

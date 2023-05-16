@@ -6,7 +6,9 @@ const fakeUser = {
 };
 
 export const home = async (req, res) => {
-  const videos = await Video.find({});
+  const videos = await Video.find({}).sort({
+    createdAt: "desc"
+  });
   return res.render("home", {pageTitle:"Home", videos, fakeUser});
 };
 
@@ -83,6 +85,18 @@ export const remove = async (req, res) => {
   return res.redirect("/");
 }; 
 
-export const search = (req, res) => {
-  return res.render("search", {pageTitle:"search"});
+export const search = async (req, res) => {
+  const { query:{keyword} } = req;
+
+  let videos = [];
+
+  if(keyword){
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(keyword, "i")
+      },
+    });
+  }
+
+  return res.render("search", {pageTitle:"search", videos, fakeUser});
 }; 
