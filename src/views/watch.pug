@@ -1,4 +1,12 @@
 extends base
 
 block content 
-  h1 Watch Video
+  h1 Watch Video # #{video.id}
+  ul 
+    li Title : #{video.title}
+    li #{video.rating} / 5.0
+    li #{video.createdAt} posted
+    li #{video.comments} #{video.comments === 1 ? "comment" : "comments"}
+    li #{video.views} #{video.views === 1 ? "view" : "views"}
+    
+  a(href=`${video.id}/edit`) Edit Video &rarr;
