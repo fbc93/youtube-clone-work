@@ -9,11 +9,14 @@ html(lang="ko")
         small Hello #{fakeUser.userName}
       nav 
         ul
+          li
+              a(href="/") Home
+
           if fakeUser.loggedIn
             li
-              a(href="/logout") Logout
-            li
               a(href="/videos/upload") Upload Video
+            li
+              a(href="/logout") Logout
           else 
             li
               a(href="/login") Login

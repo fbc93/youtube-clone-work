@@ -4,12 +4,12 @@ block content
   h4 Change Title of Video
   form(method="POST")
     label(for="title") 타이틀 : 
-    input(id="title", name="title", placeholder="Title", value=video.title, required)
+    input(id="title", name="title", placeholder="Title", max=80, value=video.title, required)
 
     label(for="description") 설명 :
-    input(id="description", name="description", placeholder="Description", value=video.description, required)
+    input(id="description", name="description", placeholder="Description", min=20, value=video.description, required)
 
     label(for="hashtags") 태그 :
-    input(id="hashtags", name="hashtags", placeholder="Hashtags", value=video.hashtags, required)
+    input(id="hashtags", name="hashtags", placeholder="Hashtags", value=video.hashtags.join(), required)
 
     input(value="Save", type="submit")

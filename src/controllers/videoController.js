@@ -14,11 +14,11 @@ export const watch = async (req, res) => {
   const { params: {id} } = req;
   const video = await Video.findById(id);
 
-  if(video){
-    return res.render("watch", {pageTitle:`Watching: ${video.title}`, video, fakeUser});
+  if(!video){
+    return res.render("404", {pageTitle: "Video Not Found.", fakeUser});
   }
-  
-  return res.render("404", {pageTitle: "Video Not Found.", fakeUser});
+
+  return res.render("watch", {pageTitle:`Watching: ${video.title}`, video, fakeUser});
 }; 
 
 export const getUpload = (req, res) => {
@@ -32,7 +32,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags: hashtags.split(",").map((hashtag) => `#${hashtag.trim()}`),
+      hashtags,
     });
 
     return res.redirect("/");
@@ -52,12 +52,28 @@ export const getEdit = async (req, res) => {
   const { params: {id} } = req;
   const video = await Video.findById(id);
 
+  if(!video){
+    return res.render("404", {pageTitle: "Video Not Found.", fakeUser});
+  }
+
   return res.render("edit", {pageTitle:`Editing: ${video.title}`, video, fakeUser});
 }; 
 
-export const postEdit = (req, res) => {
-  const { params: {id}, body:{title} } = req;
+export const postEdit = async (req, res) => {
+  const { params: {id}, body:{title, description, hashtags} } = req;
+  const video = await Video.exists({_id:id});
 
+  if(!video){
+    return res.render("404", {pageTitle: "Video Not Found.", fakeUser});
+  }
+
+  await Video.findByIdAndUpdate(id,{
+    title,
+    description,
+    hashtags: hashtags.split(",").map((hastag) => hastag.startsWith("#") ? hastag : `#${hastag}`),
+  });
+
+  await video.save();
   return res.redirect(`/videos/${id}`);
 }
 
