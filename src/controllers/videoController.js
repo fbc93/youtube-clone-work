@@ -1,6 +1,6 @@
 const fakeUser = {
   userName : "yhwa",
-  loggedIn : false,
+  loggedIn : true,
 }
 
 let videos = [
@@ -41,6 +41,24 @@ export const watch = (req, res) => {
   return res.render("watch", {pageTitle:`Watching: ${video.title}`, fakeUser, video});
 }; 
 
+export const getUpload = (req, res) => {
+  return res.render("upload", {pageTitle:"Upload Video", fakeUser}); 
+};
+
+export const postUpload = (req, res) => {
+  const { body:{title} } = req;
+  videos.push({
+    title,
+    rating:0,
+    comments:0,
+    createdAt: new Date(),
+    views:0,
+    id: videos.length + 1,
+  });
+
+  return res.redirect("/");
+};
+
 export const getEdit = (req, res) => {
   const { params: {id} } = req;
   const video = videos[id-1];
@@ -50,9 +68,8 @@ export const getEdit = (req, res) => {
 
 export const postEdit = (req, res) => {
   const { params: {id}, body:{title} } = req;
-  
   videos[id - 1].title = title;
-  
+
   return res.redirect(`/videos/${id}`);
 }
 
@@ -65,7 +82,3 @@ export const remove = (req, res) => {
 
   return res.render("remove", {pageTitle:"remove"});
 }; 
-
-export const upload = (req, res) => {
-  return res.render("Upload Video", {pageTitle:"upload"}); 
-};
