@@ -1,12 +1,14 @@
 extends base
 
-block content 
-  h1 Watch Video # #{video.id}
+block content
+  h1=video.title
+  p=video.description
+  small=video.createdAt
   ul 
-    li Title : #{video.title}
-    li #{video.rating} / 5.0
-    li #{video.createdAt} posted
-    li #{video.comments} #{video.comments === 1 ? "comment" : "comments"}
-    li #{video.views} #{video.views === 1 ? "view" : "views"}
-    
+    each hastag in video.hashtags
+      li=hastag
+      
+  p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
+  p #{video.meta.rating} / 5.0
+
   a(href=`${video.id}/edit`) Edit Video &rarr;

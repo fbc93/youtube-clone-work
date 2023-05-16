@@ -3,5 +3,13 @@ extends base
 block content 
   h4 Change Title of Video
   form(method="POST")
-    input(name="title", placeholder="Video Title", value=video.title, required)
+    label(for="title") 타이틀 : 
+    input(id="title", name="title", placeholder="Title", value=video.title, required)
+
+    label(for="description") 설명 :
+    input(id="description", name="description", placeholder="Description", value=video.description, required)
+
+    label(for="hashtags") 태그 :
+    input(id="hashtags", name="hashtags", placeholder="Hashtags", value=video.hashtags, required)
+
     input(value="Save", type="submit")
