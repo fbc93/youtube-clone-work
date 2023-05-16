@@ -32,7 +32,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags,
+      hashtags: Video.formatHashtags(hashtags),
     });
 
     return res.redirect("/");
@@ -70,10 +70,9 @@ export const postEdit = async (req, res) => {
   await Video.findByIdAndUpdate(id,{
     title,
     description,
-    hashtags: hashtags.split(",").map((hastag) => hastag.startsWith("#") ? hastag : `#${hastag}`),
+    hashtags: Video.formatHashtags(hashtags),
   });
 
-  await video.save();
   return res.redirect(`/videos/${id}`);
 }
 

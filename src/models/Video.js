@@ -40,11 +40,12 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
-//middleware
-videoSchema.pre('save', async function(){
-  this.hashtags = this.hashtags[0].split(",").map((item) => (item.startsWith("#") ? item.trim() : `#${item.trim()}`));
+videoSchema.static("formatHashtags", function(hashtags){
+  return hashtags
+  .split(",")
+  .map((hashtag) => (hashtag.startsWith("#") ? hashtag.trim() : `#${hashtag.trim()}`));
 });
 
-const movieModel = mongoose.model("Video", videoSchema);
+const Video = mongoose.model("Video", videoSchema);
 
-export default movieModel;
+export default Video;
