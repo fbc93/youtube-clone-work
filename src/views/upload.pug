@@ -3,5 +3,7 @@ extends base
 block content 
   h4 Upload Video
   form(method="POST")
-    input(name="title", placeholder="Video Title", type="text", required)
+    input(name="title", placeholder="Title", type="text", required)
+    input(name="description", placeholder="Description", type="text", required)
+    input(name="hashtags", placeholder="Hashtags, separated by comma", type="text", required)
     input(value="Upload Video", type="submit")
