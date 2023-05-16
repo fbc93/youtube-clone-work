@@ -41,12 +41,20 @@ export const watch = (req, res) => {
   return res.render("watch", {pageTitle:`Watching: ${video.title}`, fakeUser, video});
 }; 
 
-export const edit = (req, res) => {
+export const getEdit = (req, res) => {
   const { params: {id} } = req;
   const video = videos[id-1];
 
   return res.render("edit", {pageTitle:`Editing: ${video.title}`, fakeUser, video});
 }; 
+
+export const postEdit = (req, res) => {
+  const { params: {id}, body:{title} } = req;
+  
+  videos[id - 1].title = title;
+  
+  return res.redirect(`/videos/${id}`);
+}
 
 export const search = (req, res) => {
   return res.render("search", {pageTitle:"search"});

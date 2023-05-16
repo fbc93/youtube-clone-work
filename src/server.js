@@ -15,6 +15,9 @@ app.set("views", process.cwd() + "/src/views");
 //로그관리 
 app.use(logger);
 
+//Form Value
+app.use(express.urlencoded({ extended:true }));
+
 //Routers
 app.use("/", globalRouter);
 app.use("/users", userRouter);
