@@ -76,12 +76,13 @@ export const postEdit = async (req, res) => {
   return res.redirect(`/videos/${id}`);
 }
 
-export const search = (req, res) => {
-  return res.render("search", {pageTitle:"search"});
+export const remove = async (req, res) => {
+  const { params: {id} } = req;
+  await Video.findByIdAndDelete(id); //findOneAndDelete
+
+  return res.redirect("/");
 }; 
 
-export const remove = (req, res) => {
-  const {params: {id}} = req;
-
-  return res.render("remove", {pageTitle:"remove"});
+export const search = (req, res) => {
+  return res.render("search", {pageTitle:"search"});
 }; 
