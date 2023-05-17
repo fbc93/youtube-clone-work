@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import bcrypt from "bcrypt";
 
 export const fakeUser = {
@@ -190,7 +191,9 @@ export const userInfo = async (req, res) =>  {
     return res.status(404).render("404", {pageTitle:"User Not Found"});
   }
 
-  return res.render("userInfo", {pageTitle: `${user.name}의 정보`, user})
+  const videos = await Video.find({ owner: id });
+
+  return res.render("userInfo", {pageTitle: `${user.name}의 정보`, user, videos})
 };
 
 export const remove = (req, res) =>  res.send("Remove Profile");

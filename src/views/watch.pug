@@ -4,6 +4,8 @@ block content
   h1=video.title
   video(src="/" + video.fileUrl, controls=true, width=300)
   p=video.description
+  p Uploaded By
+    a(href=`/users/${video.owner._id}`) #{video.owner.name}
   small=video.createdAt
   ul 
     each hastag in video.hashtags
@@ -12,6 +14,8 @@ block content
   p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
   p #{video.meta.rating} / 5.0
 
-  a(href=`${video.id}/edit`) Edit Video &rarr;
-  br
-  a(href=`${video.id}/remove`) Delete Video &rarr;
+
+  if String(video.owner) === String(loggedInUser._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/remove`) Delete Video &rarr;

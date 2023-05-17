@@ -1,4 +1,5 @@
 import Video from "../models/Video";
+import User from "../models/User";
 
 export const fakeUser = {
   userName : "yhwa",
@@ -14,8 +15,8 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { params: {id} } = req;
-  const video = await Video.findById(id);
-
+  const video = await Video.findById(id).populate("owner");
+  
   if(!video){
     return res.status(404).render("404", {pageTitle: "Video Not Found.", fakeUser});
   }
@@ -29,10 +30,14 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   const {path: fileUrl} = req.file;
-  const { body:{title, description, hashtags} } = req;
+  const { 
+    body:{title, description, hashtags},
+    session: { user: { _id } },
+   } = req;
 
   try {
     await Video.create({
+      owner: _id,
       fileUrl,
       title,
       description,

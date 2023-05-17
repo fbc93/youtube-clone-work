@@ -1,4 +1,5 @@
 extends base
+include mixins/video
 
 block content 
   h1=user.name
@@ -6,3 +7,9 @@ block content
   div=user.username 
   div=user.email 
   div=user.location
+
+  each video in videos 
+    +video(video)
+      
+  else 
+    li  Sorry Nothing Found.
