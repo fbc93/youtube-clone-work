@@ -1,13 +1,13 @@
 extends base
 block content 
+  if errorMsg
+    div=errorMsg
+
   form(method="POST")
     input(name="username", type="text", value=loggedInUser.username, placeholder="Username", required)
     input(name="email", type="email", value=loggedInUser.email, placeholder="Email", required)
     input(name="name", type="text", value=loggedInUser.name, placeholder="Name", required)
-    input(name="password", type="password", placeholder="Password", required)
-    input(name="password_confirm", type="password", placeholder="Confirm Password", required)
     input(name="location", type="text", value=loggedInUser.location, placeholder="Location")
     input(type="submit", value="Update Profile")
-  
-  if errorMsg
-    div=errorMsg
+    hr
+    a(href="change-password") 비밀번호 변경하기 &rarr;
