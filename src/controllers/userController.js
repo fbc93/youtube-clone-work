@@ -96,8 +96,12 @@ export const postProfile = async (req, res) => {
   const {
     body:{ email, username, name, location }, 
     session:{
-      user: { _id, email: sessionEmail, username: sessionUsername}}
+      user: { _id, email: sessionEmail, username: sessionUsername}
+    },
+    file,
   } = req;
+
+  console.log(file.path);
 
   const userNameExists = username != sessionUsername ? await User.exists({ username }) : undefined;
   const emailExists = email != sessionEmail ? await User.exists({ email }) : undefined;

@@ -3,7 +3,9 @@ block content
   if errorMsg
     div=errorMsg
 
-  form(method="POST")
+  form(enctype="multipart/form-data", method="POST")
+    label(for="avatar") 프로필사진
+    input(name="avatar", id="avatar", type="file", accept="image/*")
     input(name="username", type="text", value=loggedInUser.username, placeholder="Username", required)
     input(name="email", type="email", value=loggedInUser.email, placeholder="Email", required)
     input(name="name", type="text", value=loggedInUser.name, placeholder="Name", required)
