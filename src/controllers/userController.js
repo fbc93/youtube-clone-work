@@ -79,11 +79,18 @@ export const postLogin = async (req, res) => {
     });
   }
 
+  req.session.loggedIn = true;
+  req.session.user = user;
+  
   console.log("User Login");
   return res.redirect("/");
 };
 
+export const getProfile = (req, res) => {
+
+  return res.render("profile", {pageTitle:"My Profile", fakeUser});
+};
+
 export const logout = (req, res) => res.send("Logout"); 
-export const profile = (req, res) =>  res.send("My Profile");
 export const edit = (req, res) =>  res.send("Edit My Profile");
 export const remove = (req, res) =>  res.send("Remove Profile");

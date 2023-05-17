@@ -1,11 +1,11 @@
 import express from "express";
-import { remove, edit, profile, logout } from "../controllers/userController";
+import { remove, edit,logout, getProfile } from "../controllers/userController";
 
 const userRouter = express.Router();
 
 userRouter.get("/logout", logout);
 userRouter.get("/edit", edit);
-userRouter.get("/:id(\\d+)", profile);
+userRouter.route("/:id([0-9a-f]{24})/").get(getProfile);
 userRouter.get("/:id(\\d+)/remove", remove);
 
 export default userRouter;

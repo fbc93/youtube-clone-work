@@ -2,26 +2,29 @@ doctype html
 html(lang="ko")
   head
     link(rel="stylesheet", href="https://unpkg.com/mvp.css@1.12/mvp.css")
-    title #{pageTitle} | CloneTube
+    title #{pageTitle} | #{siteName}
   body 
     header
-      if fakeUser.loggedIn 
-        small Hello #{fakeUser.userName}
+      if loggedIn 
+        small Hello, #{loggedInUser.name}
       nav 
         ul
           li
               a(href="/") Home
           li
               a(href="/search") Search
-
-          if fakeUser.loggedIn
+          
+          if loggedIn 
             li
               a(href="/videos/upload") Upload
             li
               a(href="/logout") Logout
+            li
+              a(href=`/users/${loggedInUser._id}`) Profile
+
           else 
             li
-              a(href="/login") Login
+            a(href="/login") Login
 
       h1=pageTitle
 
