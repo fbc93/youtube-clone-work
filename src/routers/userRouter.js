@@ -1,6 +1,6 @@
 import express from "express";
 import { remove, getProfile, logout, postProfile, getChangePassword, postChangePassword } from "../controllers/userController";
-import { protectorMiddleware, uploadFiles } from "../middlewares";
+import { avatarUpload, protectorMiddleware } from "../middlewares";
 
 const userRouter = express.Router();
 
@@ -11,7 +11,7 @@ userRouter
 .route("/profile")
 .all(protectorMiddleware)
 .get(getProfile)
-.post(uploadFiles.single("avatar"), postProfile);
+.post(avatarUpload.single("avatar"), postProfile);
 
 userRouter.get("/:id(\\d+)/remove", remove);
 
