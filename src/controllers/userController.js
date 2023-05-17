@@ -182,5 +182,15 @@ export const postChangePassword = async (req, res) => {
   return res.redirect("/users/logout");
 }
 
-export const edit = (req, res) =>  res.send("Edit My Profile");
+export const userInfo = async (req, res) =>  {
+  const { params:{ id } } = req;
+  const user = await User.findById(id);
+
+  if(!user){
+    return res.status(404).render("404", {pageTitle:"User Not Found"});
+  }
+
+  return res.render("userInfo", {pageTitle: `${user.name}의 정보`, user})
+};
+
 export const remove = (req, res) =>  res.send("Remove Profile");

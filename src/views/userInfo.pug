@@ -1,0 +1,8 @@
+extends base
+
+block content 
+  h1=user.name
+  img(src="/" + user.avatarUrl, width=200, alt="user image")
+  div=user.username 
+  div=user.email 
+  div=user.location

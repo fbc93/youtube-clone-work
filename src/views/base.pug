@@ -20,7 +20,9 @@ html(lang="ko")
             li
               a(href="/users/logout") Logout
             li
-              a(href=`/users/profile`) Profile
+              a(href=`/users/profile`) Edit Profile
+            li
+              a(href=`/users/${loggedInUser._id}`) 내 정보
 
           else 
             li
