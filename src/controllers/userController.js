@@ -92,6 +92,10 @@ export const getProfile = (req, res) => {
   return res.render("profile", {pageTitle:"My Profile", fakeUser});
 };
 
-export const logout = (req, res) => res.send("Logout"); 
+export const logout = (req, res) => {
+  req.session.destroy();
+  return res.redirect("/");
+};
+
 export const edit = (req, res) =>  res.send("Edit My Profile");
 export const remove = (req, res) =>  res.send("Remove Profile");
