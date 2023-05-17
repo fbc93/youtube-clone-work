@@ -1,4 +1,5 @@
 import User from "../models/User";
+import bcrypt from "bcrypt";
 
 export const fakeUser = {
   userName : "yhwa",
@@ -10,7 +11,7 @@ export const getJoin = (req, res) => {
 };
 
 export const postJoin = async (req, res) => {
-  const {body:{email, username, name, password1, password2, location}} = req;
+  const {body:{email, username, name, password, password_confirm, location}} = req;
   const exists = await User.exists({ $or: [{username}, {email}] });
 
   if(exists){
@@ -21,7 +22,7 @@ export const postJoin = async (req, res) => {
     });
   }
 
-  if(password1 !== password2){
+  if(password !== password_confirm){
     return res.status(400).render("join", {
       pageTitle:"Create Account", 
       errorMsg:"Password confirmation does not match.", 
@@ -29,13 +30,24 @@ export const postJoin = async (req, res) => {
     });
   }
 
-  await User.create({
-    email,
-    username,
-    name,
-    password,
-    location,
-  });
+  try {
+    await User.create({
+      email,
+      username,
+      name,
+      password,
+      location,
+    });
+
+  } catch(error){
+    console.log(error);
+
+    return res.status(400).render("join", {
+      pageTitle:"Create Account", 
+      errorMsg: error._message,
+      fakeUser
+    });
+  }
 
   return res.redirect("/login");
 };
@@ -45,8 +57,29 @@ export const getLogin = (req, res) => {
   return res.render("login", {pageTitle: "Login", fakeUser});
 };
 
-export const postLogin = (req, res) => {
+export const postLogin = async (req, res) => {
+  const {body:{username, password}} = req;
+  const user = await User.findOne({username});
+  const ok = await bcrypt.compare(password, user.password);
+  const pageTitle = "Login";
 
+  if(!user){
+    return res.status(400).render("login", {
+      pageTitle, 
+      errorMsg: "An account with this username does not exists.",
+      fakeUser
+    });
+  }
+
+  if(!ok){
+    return res.status(400).render("login", {
+      pageTitle, 
+      errorMsg: "Wrong Password",
+      fakeUser
+    });
+  }
+
+  console.log("User Login");
   return res.redirect("/");
 };
 

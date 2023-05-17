@@ -1,8 +1,11 @@
 extends base
 block content 
   form(method="POST")
-    input(name="email", type="email", placeholder="Email", required)
+    input(name="username", type="text", placeholder="Username", required)
     input(name="password", type="password", placeholder="Password", required)
-    input(type="submit", value="Submit")
+    input(type="submit", value="Login")
+  
+  if errorMsg
+    div=errorMsg
   
   a(href="/join") 아직 계정이 없나요? 회원가입하기 &rarr;
