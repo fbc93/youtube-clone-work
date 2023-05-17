@@ -185,15 +185,13 @@ export const postChangePassword = async (req, res) => {
 
 export const userInfo = async (req, res) =>  {
   const { params:{ id } } = req;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
 
   if(!user){
     return res.status(404).render("404", {pageTitle:"User Not Found"});
   }
 
-  const videos = await Video.find({ owner: id });
-
-  return res.render("userInfo", {pageTitle: `${user.name}의 정보`, user, videos})
+  return res.render("userInfo", {pageTitle: `${user.name}의 정보`, user})
 };
 
 export const remove = (req, res) =>  res.send("Remove Profile");
