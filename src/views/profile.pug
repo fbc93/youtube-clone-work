@@ -3,6 +3,7 @@ block content
   if errorMsg
     div=errorMsg
 
+  img(src="/" + loggedInUser.avatarUrl, alt="user profile", width=200)
   form(enctype="multipart/form-data", method="POST")
     label(for="avatar") 프로필사진
     input(name="avatar", id="avatar", type="file", accept="image/*")

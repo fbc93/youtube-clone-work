@@ -96,12 +96,11 @@ export const postProfile = async (req, res) => {
   const {
     body:{ email, username, name, location }, 
     session:{
-      user: { _id, email: sessionEmail, username: sessionUsername}
+      user: { _id, email: sessionEmail, username: sessionUsername, avatarUrl}
     },
     file,
   } = req;
 
-  console.log(file.path);
 
   const userNameExists = username != sessionUsername ? await User.exists({ username }) : undefined;
   const emailExists = email != sessionEmail ? await User.exists({ email }) : undefined;
@@ -117,6 +116,7 @@ export const postProfile = async (req, res) => {
   try {
   //db update
   const updatedUser = await User.findByIdAndUpdate(_id, {
+    avatarUrl: file ? file.path : avatarUrl,
     username,
     email,
     name,
