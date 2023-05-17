@@ -23,11 +23,11 @@ app.use(express.urlencoded({ extended:true }));
 //미들웨어3_Session
 app.use(
   session({
-    secret: "cloneTube",
-    resave: true,
-    saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: "mongodb://127.0.0.1:27017/clonetube",
+      mongoUrl: process.env.DB_URL,
     }),
   })
 );

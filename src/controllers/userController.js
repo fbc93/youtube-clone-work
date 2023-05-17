@@ -79,6 +79,7 @@ export const postLogin = async (req, res) => {
     });
   }
 
+  //session initialize
   req.session.loggedIn = true;
   req.session.user = user;
   
