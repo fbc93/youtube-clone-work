@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ],
   videos: [
     {
       type: mongoose.Schema.Types.ObjectId,
