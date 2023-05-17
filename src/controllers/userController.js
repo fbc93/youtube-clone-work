@@ -92,9 +92,48 @@ export const getProfile = (req, res) => {
   return res.render("profile", {pageTitle:"My Profile", fakeUser});
 };
 
-export const postProfile = (req, res) => {
+export const postProfile = async (req, res) => {
+  const {
+    body:{ email, username, name, location }, 
+    session:{
+      user: { _id, email: sessionEmail, username: sessionUsername}}
+  } = req;
 
-  return res.render("profile", {pageTitle:"My Profile", fakeUser});
+  const userNameExists = username != sessionUsername ? await User.exists({ username }) : undefined;
+  const emailExists = email != sessionEmail ? await User.exists({ email }) : undefined;
+
+  if(userNameExists || emailExists) {
+    return res.status(400).render("profile", {
+      pageTitle:"My Profile", 
+      errorMsg:"This email/username is already taken.", 
+      fakeUser
+    });
+  }
+
+  try {
+  //db update
+  const updatedUser = await User.findByIdAndUpdate(_id, {
+    username,
+    email,
+    name,
+    location,
+  }, {
+    new:true,
+  });
+
+  //session update
+  req.session.user = updatedUser;
+  return res.redirect("/users/profile");
+
+  } catch(error){
+    console.log(error);
+
+    return res.status(400).render("profile", {
+      pageTitle:"My Profile", 
+      errorMsg: error._message,
+      fakeUser
+    });
+  }
 };
 
 export const logout = (req, res) => {
