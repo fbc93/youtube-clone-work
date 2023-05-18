@@ -1,24 +1,37 @@
 extends base
 
 block content
-  h1=video.title
-  video(src="/" + video.fileUrl, controls=true, width=300)
-  p=video.description
-  p Uploaded By
-    a(href=`/users/${video.owner._id}`) #{video.owner.name}
-  small=video.createdAt
-  ul 
-    each hastag in video.hashtags
-      li=hastag
+  div#videoContainer
+    video(controls, playsinline, width=500, height=300)#video
+      source(src="/" + video.fileUrl, type="video/mp4")
+    div
+      input(type="range", step=1, value=0, min=0)#timeline 
+      button#play play
+      button#mute mute
+      button#fullScreen Full Screen
+      div#time
+        span#currentTime 00:00
+        span  /
+        span#totalTime  00:00
+      input(type="range", step=0.1, min=0, max=1)#volume
+    
+  //- h1=video.title
+  //- p=video.description
+  //- p Uploaded By
+  //-   a(href=`/users/${video.owner._id}`) #{video.owner.name}
+  //- small=video.createdAt
+  //- ul 
+  //-   each hastag in video.hashtags
+  //-     li=hastag
       
-  p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
-  p #{video.meta.rating} / 5.0
+  //- p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
+  //- p #{video.meta.rating} / 5.0
 
 
-  if String(video.owner._id) === String(loggedInUser._id)
-    a(href=`${video.id}/edit`) Edit Video &rarr;
-    br
-    a(href=`${video.id}/remove`) Delete Video &rarr;
+  //- if String(video.owner._id) === String(loggedInUser._id)
+  //-   a(href=`${video.id}/edit`) Edit Video &rarr;
+  //-   br
+  //-   a(href=`${video.id}/remove`) Delete Video &rarr;
 
   div.video__comments
     form.video__comment-form#commentForm
@@ -26,5 +39,6 @@ block content
       button Add Comment
 
 
-  block scripts
-    script(src="/assets/js/commentSection.js") 
+block scripts
+  script(src="/assets/js/videoPlayer.js")
+  script(src="/assets/js/commentSection.js")  

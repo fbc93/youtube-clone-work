@@ -1,6 +1,12 @@
 @import "./_variables";
 
 body {
-  background-color: ghostwhite;
-  color: #333333;
+  background-color: black;
+  color: white;
+}
+
+video {
+  display: block;
+  margin:auto;
+  background-color: white;
 }
