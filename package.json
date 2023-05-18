@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "유튜브 클론 코딩 챌린지",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.config.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "repository": {
     "type": "git",
