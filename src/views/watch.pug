@@ -1,8 +1,8 @@
 extends base
 
 block content
-  div#videoContainer
-    video(controls, playsinline, width=500, height=300)#video
+  div#videoContainer(data-videoId=video._id)
+    video(playsinline, width=500, height=300)#video
       source(src="/" + video.fileUrl, type="video/mp4")
     div
       input(type="range", step=1, value=0, min=0)#timeline 

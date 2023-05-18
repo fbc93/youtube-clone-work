@@ -9,12 +9,23 @@ const fullScreen = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const fullscreenElement = document.fullscreenElement;
 
+console.log(videoContainer.dataset)
+
 //initialize volume
 let volumeValue = 0.5;
 video.volume = volumeValue;
 
+//view api호출
+const handleEnded = async () => {
+  const {videoid} = videoContainer.dataset;
+  fetch(`/api/videos/${videoid}/view`, {
+    method: "POST",
+  });
+}
+
 //video end event
 video.addEventListener("ended", (event) => {
+  handleEnded();
   play.innerText = "play";
 });
 
