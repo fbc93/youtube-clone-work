@@ -33,10 +33,15 @@ block content
     a(href=`${video.id}/remove`) Delete Video &rarr;
 
   if loggedInUser
-    div.video__comments
-    form.video__comment-form#commentForm
-      textarea(cols="30", rows="10", placeholder="Write a nice comment")
-      button Add Comment
+    div.video__add-comments
+      form.video__comment-form#commentForm
+        textarea(cols="30", rows="10", placeholder="Write a nice comment")
+        button Add Comment
+  
+  div.video__comments
+    ul
+      each comment in video.comments.reverse()
+        li.video_comment=comment.text
 
 
 block scripts
