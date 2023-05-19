@@ -84,7 +84,7 @@ export const postLogin = async (req, res) => {
   req.session.loggedIn = true;
   req.session.user = user;
   
-  console.log("User Login");
+  console.log("User Login 😀");
   return res.redirect("/");
 };
 

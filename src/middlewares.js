@@ -5,7 +5,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.loggedInUser = req.session.user;
   res.locals.siteName = "cloneTube";
 
-  console.log(res.locals)
+  //console.log(res.locals)
   next();
 };
 
