@@ -21,7 +21,10 @@ app.use(logger);
 //미들웨어2_Form Value
 app.use(express.urlencoded({ extended:true }));
 
-//미들웨어3_Session
+//미들웨어3_String를 Json으로 변환
+app.use(express.json());
+
+//미들웨어4_Session
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -33,7 +36,7 @@ app.use(
   })
 );
 
-//로그인 회원 확인 미들웨어
+//미들웨어5_로그인 회원 확인
 app.use(localsMiddleware);
 
 //Routers

@@ -15,25 +15,25 @@ block content
         span#totalTime  00:00
       input(type="range", step=0.1, min=0, max=1)#volume
     
-  //- h1=video.title
-  //- p=video.description
-  //- p Uploaded By
-  //-   a(href=`/users/${video.owner._id}`) #{video.owner.name}
-  //- small=video.createdAt
-  //- ul 
-  //-   each hastag in video.hashtags
-  //-     li=hastag
+  h1=video.title
+  p=video.description
+  p Uploaded By
+    a(href=`/users/${video.owner._id}`) #{video.owner.name}
+  small=video.createdAt
+  ul 
+    each hastag in video.hashtags
+      li=hastag
       
-  //- p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
-  //- p #{video.meta.rating} / 5.0
+  p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
+  p #{video.meta.rating} / 5.0
 
+  if loggedInUser && String(video.owner._id) === String(loggedInUser._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/remove`) Delete Video &rarr;
 
-  //- if String(video.owner._id) === String(loggedInUser._id)
-  //-   a(href=`${video.id}/edit`) Edit Video &rarr;
-  //-   br
-  //-   a(href=`${video.id}/remove`) Delete Video &rarr;
-
-  div.video__comments
+  if loggedInUser
+    div.video__comments
     form.video__comment-form#commentForm
       textarea(cols="30", rows="10", placeholder="Write a nice comment")
       button Add Comment
@@ -41,4 +41,5 @@ block content
 
 block scripts
   script(src="/assets/js/videoPlayer.js")
-  script(src="/assets/js/commentSection.js")  
+  if loggedIn
+    script(src="/assets/js/commentSection.js")

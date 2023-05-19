@@ -9,8 +9,6 @@ const fullScreen = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const fullscreenElement = document.fullscreenElement;
 
-console.log(videoContainer.dataset)
-
 //initialize volume
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -143,7 +141,7 @@ video.addEventListener("timeupdate", handleTimeUpdate);
 timeline.addEventListener("input", handleTimelineChange);
 
 //keyboard event
-document.addEventListener("keydown", handleKeyCodeEvent, false);
+videoContainer.addEventListener("keydown", handleKeyCodeEvent, false);
 
 //fullscreen event
 fullScreen.addEventListener("click", handleFullScreen);
