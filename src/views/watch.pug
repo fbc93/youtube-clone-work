@@ -41,7 +41,7 @@ block content
   div.video__comments
     ul
       each comment in video.comments.reverse()
-        li.video__comment
+        li.video__comment(data-commentId=comment._id)
           div.comment__text=comment.text
 
           div.comment__edit
