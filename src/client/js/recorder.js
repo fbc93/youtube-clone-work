@@ -1,3 +1,5 @@
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+
 const startBtn = document.getElementById("startBtn");
 const video = document.getElementById("preview");
 const videoSource = document.querySelector("#preview > source");
@@ -6,8 +8,24 @@ let stream;
 let recorder;
 let videoFile;
 
-const handleDownload = () => {
-  console.log("download source")
+//녹화본 다운로드 링크 생성
+const handleDownload = async () => {
+
+  const ffmpeg = createFFmpeg({ log:true });
+  await ffmpeg.load();
+
+  ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFile));
+  await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
+
+  const mp4File = ffmpeg.FS("readFile", "output.mp4")
+  const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
+  const mp4Url = URL.createObjectURL(mp4Blob)
+
+  const a = document.createElement("a");
+  a.href = mp4Url;
+  a.download = String(Date.now() + "_recording.mp4");
+  document.body.appendChild(a);
+  a.click();
 }
 
 const handleStop = () => {
@@ -28,7 +46,7 @@ const handleStart = () => {
 
   recorder.ondataavailable = (event) => {
     console.log("recording done: ",event.data); 
-    const videoFile = URL.createObjectURL(event.data);
+    videoFile = URL.createObjectURL(event.data);
     console.log("saved as :", videoFile);
 
     video.srcObject = null;

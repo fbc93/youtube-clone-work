@@ -39,6 +39,13 @@ app.use(
 //미들웨어5_로그인 회원 확인
 app.use(localsMiddleware);
 
+//cross-origin
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
+
 //Routers
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));

@@ -3,6 +3,7 @@ extends base
 block content
   div#videoContainer(data-videoId=video._id)
     video(width=500, height=300)#video Sorry, Not supported Video
+      source(src="/" + video.fileUrl, type="video/webm")
       source(src="/" + video.fileUrl, type="video/mp4")
       source(src="/" + video.fileUrl, type="video/quicktime")
       source(src="/" + video.fileUrl, type="video/ogg")
