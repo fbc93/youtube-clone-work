@@ -1,6 +1,6 @@
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
-const startBtn = document.getElementById("startBtn");
+const actionBtn = document.getElementById("actionBtn");
 const video = document.getElementById("preview");
 const videoSource = document.querySelector("#preview > source");
 
@@ -8,30 +8,43 @@ let stream;
 let recorder;
 let videoFile;
 
+const files = {
+  input:"recording.webm",
+  output:"output.mp4",
+  thumb:"thumbnail.jpg",
+};
+
 //녹화본 다운로드 링크 생성
 const handleDownload = async () => {
+
+  //완료후 버튼 비활성화
+  actionBtn.removeEventListener("click", handleDownload);
+  actionBtn.innerText = "Transcoding...";
+  actionBtn.disabled = true;
 
   const ffmpeg = createFFmpeg({ log:true });
   await ffmpeg.load();
 
   //녹화 영상 파일 webm을 mp4로 트랜스코딩
-  ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFile));
-  await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
+  ffmpeg.FS("writeFile", files.input, await fetchFile(videoFile));
+  await ffmpeg.run("-i", files.input, "-r", "60", files.output);
 
   //녹화 영상 썸네일 jpg 추출
   await ffmpeg.run(
     "-i",
-    "recording.webm",
+    files.input,
     "-ss",
     "00:00:01",
     "-frames:v",
     "1",
-    "thumbnail.jpg"
+    files.thumb
   );
 
-  const mp4File = ffmpeg.FS("readFile", "output.mp4");
-  const thumbFile = ffmpeg.FS("readFile", "thumbnail.jpg");
+  //readFile
+  const mp4File = ffmpeg.FS("readFile", files.output);
+  const thumbFile = ffmpeg.FS("readFile", files.thumb);
 
+  //binary data로 변환
   const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
   const thumbBlob = new Blob([thumbFile.buffer], {type:"image/jpg"});
 
@@ -56,20 +69,34 @@ const handleDownload = async () => {
   setTimeout(()=>{
     thumbA.click();
   },1000);
+
+  //브라우저 속도 향상을 위해 사전에 만든 파일 링크들 해제
+  ffmpeg.FS("unlink", files.input);
+  ffmpeg.FS("unlink", files.output);
+  ffmpeg.FS("unlink", files.thumb);
+
+  // URL.revokeObjectURL(mp4Url);
+  // URL.revokeObjectURL(thumbUrl);
+  // URL.revokeObjectURL(videoFile);
+
+  actionBtn.innerText = "Record Again";
+  actionBtn.disabled = false;
+  initCameraPreview();
+  actionBtn.addEventListener("click", handleStart);
 }
 
 const handleStop = () => {
-  startBtn.innerText = "Download Recording";
-  startBtn.removeEventListener("click", handleStop);
-  startBtn.addEventListener("click", handleDownload);
+  actionBtn.innerText = "Download Recording";
+  actionBtn.removeEventListener("click", handleStop);
+  actionBtn.addEventListener("click", handleDownload);
 
   recorder.stop();
 }
 
 const handleStart = () => {
-  startBtn.innerText = "Stop Recording";
-  startBtn.removeEventListener("click", handleStart);
-  startBtn.addEventListener("click", handleStop);
+  actionBtn.innerText = "Stop Recording";
+  actionBtn.removeEventListener("click", handleStart);
+  actionBtn.addEventListener("click", handleStop);
 
   recorder = new MediaRecorder(stream);
   console.log(recorder);
@@ -107,4 +134,4 @@ const initCameraPreview = async () => {
 initCameraPreview();
 
 //클릭하여 레코딩 시작
-startBtn.addEventListener("click", handleStart);
+actionBtn.addEventListener("click", handleStart);
