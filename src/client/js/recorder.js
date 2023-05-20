@@ -14,18 +14,48 @@ const handleDownload = async () => {
   const ffmpeg = createFFmpeg({ log:true });
   await ffmpeg.load();
 
+  //녹화 영상 파일 webm을 mp4로 트랜스코딩
   ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFile));
   await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
 
-  const mp4File = ffmpeg.FS("readFile", "output.mp4")
-  const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
-  const mp4Url = URL.createObjectURL(mp4Blob)
+  //녹화 영상 썸네일 jpg 추출
+  await ffmpeg.run(
+    "-i",
+    "recording.webm",
+    "-ss",
+    "00:00:01",
+    "-frames:v",
+    "1",
+    "thumbnail.jpg"
+  );
 
-  const a = document.createElement("a");
-  a.href = mp4Url;
-  a.download = String(Date.now() + "_recording.mp4");
-  document.body.appendChild(a);
-  a.click();
+  const mp4File = ffmpeg.FS("readFile", "output.mp4");
+  const thumbFile = ffmpeg.FS("readFile", "thumbnail.jpg");
+
+  const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
+  const thumbBlob = new Blob([thumbFile.buffer], {type:"image/jpg"});
+
+  const mp4Url = URL.createObjectURL(mp4Blob);
+  const thumbUrl = URL.createObjectURL(thumbBlob);
+
+  //녹화 썸네일 다운로드 링크
+  const thumbA = document.createElement("a");
+  thumbA.href = thumbUrl;
+  thumbA.download = String(Date.now() + "_thumbnail.jpg");
+  document.body.appendChild(thumbA);
+
+  //녹화 영상 다운로드 링크
+  const videoA = document.createElement("a");
+  videoA.href = mp4Url;
+  videoA.download = String(Date.now() + "_recording.mp4");
+  document.body.appendChild(videoA);
+
+  //사파리 click메서드 연속 적용 불가
+  //영상 다운로드 후, 1초 뒤 썸네일 다운로드
+  videoA.click();
+  setTimeout(()=>{
+    thumbA.click();
+  },1000);
 }
 
 const handleStop = () => {
