@@ -13,7 +13,6 @@ export const home = async (req, res) => {
 export const watch = async (req, res) => {
   const { params: {id} } = req;
   const video = await Video.findById(id).populate("owner").populate("comments");
-  console.log(video)
   
   if(!video){
     return res.status(404).render("404", {pageTitle: "Video Not Found."});
@@ -204,13 +203,10 @@ export const deleteComment = async (req, res) => {
   }
 
   //로그인한 사용자와 코멘트의 오너가 다를경우
-  if (comment.owner !== _id){
+  if (comment.owner != _id){
     return res.sendStatus(404);
   }
 
-
-  
-
-
+  comment.remove();
   return res.sendStatus(200);
 };

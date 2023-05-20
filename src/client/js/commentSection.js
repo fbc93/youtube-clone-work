@@ -1,11 +1,9 @@
-const { async } = require("regenerator-runtime");
-
 const form = document.getElementById("commentForm");
 const videoContainer = document.getElementById("videoContainer");
+const videoComments = document.querySelector(".video__comments ul");
 const deleteBtn = document.querySelectorAll(".deleteBtn");
 
 const addComment = (text, newCommentId) => {
-  const videoComments = document.querySelector(".video__comments ul");
 
   const newComment = document.createElement("li");
   const deleteBtn = document.createElement("span");
@@ -15,6 +13,7 @@ const addComment = (text, newCommentId) => {
 
   newComment.className = "video__comment";
   deleteBtn.className = "deleteBtn";
+  deleteBtn.onclick = deleteComment;
   updateBtn.className = "updateBtn";
   comment__text.className = "comment__text";
   comment__edit.className = "comment__edit";
@@ -59,6 +58,28 @@ const handleSubmit = async (event) => {
   }
 }
 
+//리팩토링 필요
+const deleteComment = async (event) => {
+  const targetComment = event.target.parentNode.parentNode;
+  const videoId = videoContainer.dataset.videoid;
+
+  const { 
+    dataset: { commentid }
+  } = targetComment;
+
+  const response = await fetch(`/api/videos/${videoId}/comment/delete`, {
+    method:"DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ commentid }),
+  });
+
+  if (response.status === 200){
+    targetComment.remove();
+  }
+}
+
 //버튼 클릭
 const handleDeleteComment = async (event) => {
   const targetComment = event.target.parentElement.parentElement;
@@ -77,7 +98,7 @@ const handleDeleteComment = async (event) => {
   });
 
   if (response.status === 200){
-    console.log("200")
+    targetComment.remove();
   }
 };
 
