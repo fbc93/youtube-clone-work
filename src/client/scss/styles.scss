@@ -10,3 +10,12 @@ video {
   margin:auto;
   background-color: white;
 }
+
+.video-mixin__thumb {
+  width:300px;
+  height:200px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size:contain;
+  background-color:white;
+}

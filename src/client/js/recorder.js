@@ -96,7 +96,7 @@ const handleStop = () => {
 const handleStart = () => {
   actionBtn.innerText = "Stop Recording";
   actionBtn.removeEventListener("click", handleStart);
-  actionBtn.addEventListener("click", handleStop);
+  //actionBtn.addEventListener("click", handleStop);
 
   recorder = new MediaRecorder(stream);
   console.log(recorder);
@@ -111,17 +111,25 @@ const handleStart = () => {
     video.muted = true;
     videoSource.src = videoFile;
     video.play();
+    actionBtn.innerText = "Download";
+    actionBtn.disabled = false;
+    actionBtn.addEventListener("click", handleDownload);
   }
 
   recorder.start();
   console.log(recorder);
+
+  //5초후 녹화종료
+  setTimeout(()=>{
+    recorder.stop();
+  },5000);
 }
 
 const initCameraPreview = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     video: {
-      width: 600,
-      height: 400
+      width: 1024,
+      height: 576
     },
     audio: false,
   });
