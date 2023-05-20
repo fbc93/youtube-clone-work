@@ -1,5 +1,8 @@
+const { async } = require("regenerator-runtime");
+
 const form = document.getElementById("commentForm");
 const videoContainer = document.getElementById("videoContainer");
+const deleteBtn = document.querySelectorAll(".deleteBtn");
 
 const addComment = (text, newCommentId) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -56,6 +59,33 @@ const handleSubmit = async (event) => {
   }
 }
 
+//버튼 클릭
+const handleDeleteComment = async (event) => {
+  const targetComment = event.target.parentElement.parentElement;
+  const videoId = videoContainer.dataset.videoid;
+
+  const { 
+    dataset: { commentid }
+  } = targetComment;
+
+  const response = await fetch(`/api/videos/${videoId}/comment/delete`, {
+    method:"DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ commentid }),
+  });
+
+  if (response.status === 200){
+    console.log("200")
+  }
+};
+
+
 if(form){
-  form.addEventListener("submit", handleSubmit)
+  form.addEventListener("submit", handleSubmit);
+}
+
+if(deleteBtn){
+  deleteBtn.forEach((btn) => btn.addEventListener("click", handleDeleteComment));
 }

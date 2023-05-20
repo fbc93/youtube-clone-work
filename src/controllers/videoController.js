@@ -2,33 +2,28 @@ import Video from "../models/Video";
 import Comment from "../models/Comment";
 import User from "../models/User";
 
-export const fakeUser = {
-  userName : "yhwa",
-  loggedIn : false,
-};
-
 export const home = async (req, res) => {
   const videos = await Video.find({}).sort({
     createdAt: "desc"
   });
-  return res.render("home", {pageTitle:"Home", videos, fakeUser});
+
+  return res.render("home", {pageTitle:"Home", videos});
 };
 
 export const watch = async (req, res) => {
   const { params: {id} } = req;
   const video = await Video.findById(id).populate("owner").populate("comments");
-
-  //console.log(video)
+  console.log(video)
   
   if(!video){
-    return res.status(404).render("404", {pageTitle: "Video Not Found.", fakeUser});
+    return res.status(404).render("404", {pageTitle: "Video Not Found."});
   }
 
-  return res.render("watch", {pageTitle:`Watching: ${video.title}`, video, fakeUser});
+  return res.render("watch", {pageTitle:`Watching: ${video.title}`, video});
 }; 
 
 export const getUpload = (req, res) => {
-  return res.render("upload", {pageTitle:"Upload Video", fakeUser}); 
+  return res.render("upload", {pageTitle:"Upload Video"}); 
 };
 
 export const postUpload = async (req, res) => {
@@ -62,7 +57,6 @@ export const postUpload = async (req, res) => {
     return res.status(400).render("upload", {
       pageTitle:"Upload Video", 
       errorMsg: error._message, 
-      fakeUser,
     }); 
   }
 };
@@ -76,14 +70,14 @@ export const getEdit = async (req, res) => {
   const video = await Video.findById(id).populate("videos");
 
   if(!video){
-    return res.status(404).render("404", {pageTitle: "Video Not Found.", fakeUser});
+    return res.status(404).render("404", {pageTitle: "Video Not Found."});
   }
 
   if(String(video.owner) !== String(_id)){
     return res.status(403).redirect("/");
   }
 
-  return res.render("edit", {pageTitle:`Editing: ${video.title}`, video, fakeUser});
+  return res.render("edit", {pageTitle:`Editing: ${video.title}`, video});
 }; 
 
 export const postEdit = async (req, res) => {
@@ -95,7 +89,7 @@ export const postEdit = async (req, res) => {
   const video = await Video.exists({_id:id});
 
   if(!video){
-    return res.status(404).render("404", {pageTitle: "Video Not Found.", fakeUser});
+    return res.status(404).render("404", {pageTitle: "Video Not Found."});
   }
 
   if(String(video.owner) !== String(_id)){
@@ -120,7 +114,7 @@ export const remove = async (req, res) => {
    const video = await Video.findById(id);
 
   if(!video){
-    return res.status(404).render("404", {pageTitle: "Video Not Found.", fakeUser});
+    return res.status(404).render("404", {pageTitle: "Video Not Found."});
   }
 
   if(String(video.owner) !== String(_id)){
@@ -145,7 +139,7 @@ export const search = async (req, res) => {
     });
   }
 
-  return res.render("search", {pageTitle:"search", videos, fakeUser});
+  return res.render("search", {pageTitle:"search", videos});
 }; 
 
 export const registerView = async (req, res) => {
@@ -188,3 +182,35 @@ export const createComment = async (req, res) => {
     newCommentId: comment._id,
   });
 }
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: { id },
+    session: { user: { _id } },
+    body: { commentid },
+  } = req;
+  
+  const video = await Video.findById(id);
+  const comment = await Comment.findById(commentid);
+
+  //존재하는 비디오인지 확인
+  if(!video){
+    return res.sendStatus(404);
+  }
+
+  //존재하는 코멘트인지 확인
+  if(!comment){
+    return res.sendStatus(404);
+  }
+
+  //로그인한 사용자와 코멘트의 오너가 다를경우
+  if (comment.owner !== _id){
+    return res.sendStatus(404);
+  }
+
+
+  
+
+
+  return res.sendStatus(200);
+};

@@ -153,5 +153,3 @@ document.onfullscreenchange = () => {
   ? fullScreen.innerText = "Exit Screen" 
   : fullScreen.innerText = "Full Screen"
 }
-
-

@@ -2,13 +2,8 @@ import User from "../models/User";
 import Video from "../models/Video";
 import bcrypt from "bcrypt";
 
-export const fakeUser = {
-  userName : "yhwa",
-  loggedIn : false,
-};
-
 export const getJoin = (req, res) => {
-  return res.render("join", {pageTitle:"Create Account", fakeUser});
+  return res.render("join", {pageTitle:"Create Account"});
 };
 
 export const postJoin = async (req, res) => {
@@ -19,7 +14,7 @@ export const postJoin = async (req, res) => {
     return res.status(400).render("join", {
       pageTitle:"Create Account", 
       errorMsg:"This email/username is already taken.", 
-      fakeUser
+  
     });
   }
 
@@ -27,7 +22,7 @@ export const postJoin = async (req, res) => {
     return res.status(400).render("join", {
       pageTitle:"Create Account", 
       errorMsg:"Password confirmation does not match.", 
-      fakeUser
+  
     });
   }
 
@@ -46,7 +41,7 @@ export const postJoin = async (req, res) => {
     return res.status(400).render("join", {
       pageTitle:"Create Account", 
       errorMsg: error._message,
-      fakeUser
+  
     });
   }
 
@@ -55,7 +50,7 @@ export const postJoin = async (req, res) => {
 
 export const getLogin = (req, res) => {
 
-  return res.render("login", {pageTitle: "Login", fakeUser});
+  return res.render("login", {pageTitle: "Login"});
 };
 
 export const postLogin = async (req, res) => {
@@ -68,7 +63,7 @@ export const postLogin = async (req, res) => {
     return res.status(400).render("login", {
       pageTitle, 
       errorMsg: "An account with this username does not exists.",
-      fakeUser
+  
     });
   }
 
@@ -76,7 +71,7 @@ export const postLogin = async (req, res) => {
     return res.status(400).render("login", {
       pageTitle, 
       errorMsg: "Wrong Password",
-      fakeUser
+  
     });
   }
 
@@ -90,7 +85,7 @@ export const postLogin = async (req, res) => {
 
 export const getProfile = (req, res) => {
 
-  return res.render("profile", {pageTitle:"My Profile", fakeUser});
+  return res.render("profile", {pageTitle:"My Profile"});
 };
 
 export const postProfile = async (req, res) => {
@@ -110,7 +105,7 @@ export const postProfile = async (req, res) => {
     return res.status(400).render("profile", {
       pageTitle:"My Profile", 
       errorMsg:"This email/username is already taken.", 
-      fakeUser
+  
     });
   }
 
@@ -136,7 +131,7 @@ export const postProfile = async (req, res) => {
     return res.status(400).render("profile", {
       pageTitle:"My Profile", 
       errorMsg: error._message,
-      fakeUser
+  
     });
   }
 };

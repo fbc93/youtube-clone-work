@@ -47,9 +47,10 @@ block content
         li.video__comment(data-commentId=comment._id)
           div.comment__text=comment.text
 
-          div.comment__edit
-            span.deleteBtn ❌
-            span.updateBtn ✏️
+          if loggedInUser._id == comment.owner
+            div.comment__edit
+              span.deleteBtn ❌
+              span.updateBtn ✏️
 
 
 block scripts
