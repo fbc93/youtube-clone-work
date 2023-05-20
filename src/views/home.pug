@@ -1,11 +1,10 @@
 extends base
 include mixins/video
 
-block content 
-  h2 Welcome here you will see the trending videos
-  
-  each video in videos 
-    +video(video)
-      
-  else 
-    li  Sorry Nothing Found.
+block content
+  if videos
+    div.container
+      each video in videos 
+        +video(video)
+  else
+    div.empty_list Nothing Found.

@@ -1,12 +1,13 @@
 mixin video(video)
-  div 
-    h4 
-      a(href=`/videos/${video.id}`)=video.title
-    ul 
-      each hashtag in video.hashtags
-        div.video-mixin__thumb(style=`background-image:url(${video.thumbUrl ? "/" + video.thumbUrl : ""});`)
-        li=hashtag
-    
-    p=video.description
-    small=video.createdAt
-    hr
+  a.video-mixin__list-item(href=`/videos/${video.id}`) 
+    div.video-mixin__container
+      div.video-mixin__thumb(style=`background-image:url(${video.thumbUrl ? "/" + video.thumbUrl : ""})`)
+        div.video-mixin__cover
+      div.video-mixin__info
+        div.top-area
+          div.owner_info
+            div.owner_avatar(style=`background-image: url(/${video.owner.avatarUrl ? video.owner.avatarUrl : ""})`)
+          div.video_info
+            div.title=video.title
+            div.owner=video.owner.username 
+            div.createdAt=video.createdAt

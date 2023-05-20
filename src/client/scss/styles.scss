@@ -1,21 +1,42 @@
-@import "./_variables";
+//Config
+@import "./config/variables";
+@import "./config/reset";
 
+//Default Style
 body {
-  background-color: black;
-  color: white;
+  font-family: 'Noto Sans KR', sans-serif, 'Indie Flower', cursive;
+  background-color: $darkmode_bg;
+  color: $darkmode_fontColor;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-video {
-  display: block;
-  margin:auto;
-  background-color: white;
+header {
+  width:100%;
 }
 
-.video-mixin__thumb {
-  width:300px;
-  height:200px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size:contain;
-  background-color:white;
+footer {
+  width:100%;
 }
+
+main {
+  width:100%;
+  margin-top:8vh;
+  //max-width:1024px;
+  padding:4vh 20px 4vh 20px;
+  box-sizing: border-box;
+}
+
+a {
+  color:inherit;
+}
+
+//Components
+@import "./components/header.scss";
+@import "./components/footer.scss";
+@import "./components/video.scss";
+
+//Screens
+@import "./screens/home.scss";

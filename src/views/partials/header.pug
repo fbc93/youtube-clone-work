@@ -1,0 +1,26 @@
+header.header
+  div.container
+    nav.navi
+      div.left-box
+        a.logo(href="/") cloneTube
+        ul.tabList
+          li
+            a(href="/") 🏠 HOME
+          li
+            a(href="/search") 🔎 SEARCH
+          if loggedIn 
+            li
+              a(href="/videos/upload") 📷 영상 업로드
+          else 
+            li
+              a(href="/login") Login
+      if loggedIn 
+        div.right-box
+          a(href="/users/logout") 🚪 LOGOUT
+          a(href=`/users/profile`) ⚙️ EDIT PROFILE
+          a.avatar(href=`/users/${loggedInUser._id}`)
+            if loggedInUser.avatarUrl === undefined 
+              div.emptyAvatar
+            else
+              div.userAvatar(style=`background-image: url(/${loggedInUser.avatarUrl})`)
+              
