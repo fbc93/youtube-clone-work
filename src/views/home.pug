@@ -2,9 +2,10 @@ extends base
 include mixins/video
 
 block content
-  if videos
+  if videos.length > 0
     div.container
       each video in videos 
         +video(video)
   else
-    div.empty_list Nothing Found.
+    div.empty_container
+      div.empty_list Nothing Found.

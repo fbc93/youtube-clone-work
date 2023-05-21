@@ -128,8 +128,8 @@ const handleStart = () => {
 const initCameraPreview = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     video: {
-      width: 1024,
-      height: 576
+      width: 600,
+      height: 400
     },
     audio: false,
   });

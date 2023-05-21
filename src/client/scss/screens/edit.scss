@@ -1,0 +1,99 @@
+main {
+  .edit_container {
+    max-width: 1024px;
+    margin:auto;
+    padding:0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    .edit {
+      width: 470px;
+      height: auto;
+      margin: auto;
+      border: 1px solid #333333;
+      border-radius: 10px;
+      padding-bottom: 7em;
+
+      .errMsg {
+        text-align:center;
+        color:tomato;
+        font-size:1.4rem;
+        font-weight:bold;
+        padding: 0 0 1em 0;
+      }
+
+      .pageTitle {
+        font-size:2rem;
+        text-align:center;
+        font-weight:bold;
+        padding:4em 0 2em 0;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        margin: auto auto 3em auto;
+
+        .title {
+          label {
+            margin-bottom:0.5em;
+          }
+          display: inline-block;
+          font-size:1.5rem;
+          display: flex;
+          flex-direction: column;
+          margin-bottom:1em;
+        }
+
+        .desc {
+          label {
+            margin-bottom:0.5em;
+          }
+          display: inline-block;
+          font-size:1.5rem;
+          display: flex;
+          flex-direction: column;
+          margin-bottom:1em;
+        }
+
+        .hashtags {
+          label {
+            margin-bottom:0.5em;
+          }
+          display: inline-block;
+          font-size:1.5rem;
+          display: flex;
+          flex-direction: column;
+          margin-bottom:1em;
+        }
+
+        input {
+          padding:15px;
+          background-color:#333333;
+          border:none;
+          border-radius: 3px;
+          margin-bottom: 0.5em;
+          color:white;
+          font-size:1.4rem;
+          &:last-child {
+            margin-bottom:0;
+          }
+        }
+
+        .submit {
+          background-color: tomato;
+          margin-top:1em;
+          padding:20px;
+          font-weight:bold;
+          font-size:1.6rem;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}

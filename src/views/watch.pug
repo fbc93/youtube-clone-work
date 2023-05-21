@@ -1,57 +1,64 @@
 extends base
 
 block content
-  div#videoContainer(data-videoId=video._id)
-    video(width=500, height=300)#video Sorry, Not supported Video
-      source(src="/" + video.fileUrl, type="video/webm")
-      source(src="/" + video.fileUrl, type="video/mp4")
-      source(src="/" + video.fileUrl, type="video/quicktime")
-      source(src="/" + video.fileUrl, type="video/ogg")
-    div
-      input(type="range", step=1, value=0, min=0)#timeline 
-      button#play play
-      button#mute mute
-      button#fullScreen Full Screen
-      div#time
-        span#currentTime 00:00
-        span  /
-        span#totalTime  00:00
-      input(type="range", step=0.1, min=0, max=1)#volume
-    
-  h1=video.title
-  p=video.description
-  p Uploaded By
-    a(href=`/users/${video.owner._id}`) #{video.owner.name}
-  small=video.createdAt
-  ul 
-    each hastag in video.hashtags
-      li=hastag
+  div.watch_container
+    div#videoContainer(data-videoId=video._id)
+      div.video_player
+        video.view(width=500, height=300)#video Sorry, Not supported Video
+          source(src="/" + video.fileUrl, type="video/webm")
+          source(src="/" + video.fileUrl, type="video/mp4")
+          source(src="/" + video.fileUrl, type="video/quicktime")
+          source(src="/" + video.fileUrl, type="video/ogg")
+        div.control
+          div.time_range
+            input(type="range", step=1, value=0, min=0)#timeline 
+          div.desc
+            div.left_box
+              button#play play
+              button#mute mute
+              div#time
+                span#currentTime 00:00
+                span  /
+                span#totalTime  00:00
+            div.right_box
+              input(type="range", step=0.1, min=0, max=1)#volume
+              button#fullScreen Full Screen
+      div.video_desc
+        div.title=video.title
+        div.description=video.description
+        div.createdAt=video.createdAt
+        div.owner
+          div.owner_profile
+            a.owner_avatar(href=`/users/${video.owner._id}`)
+              if video.owner.avatarUrl
+                div.profile_image(style=`background-image:url(/${video.owner.avatarUrl})`)
+          div.owner_info #{video.owner.name}
+        div.video
+          ul.hashtags 
+            each hastag in video.hashtags
+              li=hastag
+          div.view #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
+
+    if loggedInUser && String(video.owner._id) === String(loggedInUser._id)
+      div.video_edit
+        a(href=`${video.id}/edit`) Edit Video &rarr;
+        a(href=`${video.id}/remove`) Delete Video &rarr;
+
+    div.comments
+      if loggedInUser
+        div.video__add-comments
+          form.video__comment-form#commentForm
+            textarea(cols="30", rows="10", placeholder="Write a nice comment")
+            button Add Comment
       
-  p #{video.meta.views} #{video.meta.views <= 1 ? "view":"views"}
-  p #{video.meta.rating} / 5.0
-
-  if loggedInUser && String(video.owner._id) === String(loggedInUser._id)
-    a(href=`${video.id}/edit`) Edit Video &rarr;
-    br
-    a(href=`${video.id}/remove`) Delete Video &rarr;
-
-  if loggedInUser
-    div.video__add-comments
-      form.video__comment-form#commentForm
-        textarea(cols="30", rows="10", placeholder="Write a nice comment")
-        button Add Comment
-  
-  div.video__comments
-    ul
-      each comment in video.comments.reverse()
-        li.video__comment(data-commentId=comment._id)
-          div.comment__text=comment.text
-
-          if loggedInUser._id == comment.owner
-            div.comment__edit
-              span.deleteBtn ❌
-              span.updateBtn ✏️
-
+      div.video__comments
+        ul
+          each comment in video.comments.reverse()
+            li.video__comment(data-commentId=comment._id)
+              div.comment__text=comment.text
+              if loggedInUser && loggedInUser._id == comment.owner
+                div.comment__edit
+                  span.deleteBtn ❌
 
 block scripts
   script(src="/assets/js/videoPlayer.js")

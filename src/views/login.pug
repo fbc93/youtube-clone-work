@@ -1,11 +1,12 @@
 extends base
 block content 
-  form(method="POST")
-    input(name="username", type="text", placeholder="Username", required)
-    input(name="password", type="password", placeholder="Password", required)
-    input(type="submit", value="Login")
-  
-  if errorMsg
-    div=errorMsg
-  
-  a(href="/join") 아직 계정이 없나요? 회원가입하기 &rarr;
+  div.login_container
+    div.login
+      div.pageTitle 🔓 #{pageTitle}
+      if errorMsg
+        div.errMsg=errorMsg
+      form(method="POST")
+        input(name="username", type="text", placeholder="Username", required)
+        input(name="password", type="password", placeholder="Password", required)
+        input.submit(type="submit", value="Login")
+      a.join_link(href="/join") 아직 계정이 없나요? 회원가입하기 &rarr;

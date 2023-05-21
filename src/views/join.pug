@@ -1,15 +1,16 @@
 extends base
 block content
-  form(method="POST")
-    input(name="email", type="email", placeholder="Email", required)
-    input(name="username", type="text", placeholder="Username", required)
-    input(name="name", type="text", placeholder="Name", required)
-    input(name="password", type="password", placeholder="Password", required)
-    input(name="password_confirm", type="password", placeholder="Confirm Password", required)
-    input(name="location", type="text", placeholder="Location")
-    input(type="submit", value="Join")
-  
-  if errorMsg
-    div=errorMsg
-
-  a(href="/login") 이미 계정이 있나요? 로그인하기 &rarr;
+  div.join_container
+    div.join
+      div.pageTitle ✍️ #{pageTitle}
+      if errorMsg
+        div.errMsg=errorMsg
+      form(method="POST")
+        input(name="email", type="email", placeholder="Email", required)
+        input(name="username", type="text", placeholder="Username", required)
+        input(name="name", type="text", placeholder="Name", required)
+        input(name="password", type="password", placeholder="Password", required)
+        input(name="password_confirm", type="password", placeholder="Confirm Password", required)
+        input(name="location", type="text", placeholder="Location")
+        input.submit(type="submit", value="Join")
+      a.login_link(href="/login") 이미 계정이 있나요? 로그인하기 &rarr;

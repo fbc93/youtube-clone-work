@@ -7,6 +7,7 @@ const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
 const fullScreen = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
+const video_player = document.querySelector(".video_player");
 const fullscreenElement = document.fullscreenElement;
 
 //initialize volume
@@ -63,7 +64,7 @@ const handleFullScreen = () => {
     fullScreen.innerText = "Full Screen";
 
   } else {
-    videoContainer.requestFullscreen();
+    video_player.requestFullscreen();
     fullScreen.innerText = "Exit Screen";
   }
 }

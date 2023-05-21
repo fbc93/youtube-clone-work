@@ -6,7 +6,8 @@ mixin video(video)
       div.video-mixin__info
         div.top-area
           div.owner_info
-            div.owner_avatar(style=`background-image: url(/${video.owner.avatarUrl ? video.owner.avatarUrl : ""})`)
+            if video.owner.avatarUrl
+              div.owner_avatar(style=`background-image: url(/${video.owner.avatarUrl})`)
           div.video_info
             div.title=video.title
             div.owner=video.owner.username 

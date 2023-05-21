@@ -2,9 +2,14 @@ extends base
 include mixins/video
 
 block content
-  form(method="GET")
-    input(name="keyword", type="text", placeholder="Search by title")
-    input(type="submit", value="Search")
-  
-  each video in videos
-    +video(video) 
+  div.container_search
+    form(method="GET")
+      input.search(name="keyword", type="text", placeholder="Search by title")
+      input.submit(type="submit", value="Search")
+    if videos.length > 0
+      div.result_container
+        each video in videos
+          +video(video)
+    else
+      div.empty_container
+        div.empty_list Nothing Found

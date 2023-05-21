@@ -1,7 +1,7 @@
 extends base
   
 block content 
-  div 
+  div.upload_container
     video#preview
       source(src="", type="video/webm")
       source(src="", type="video/mp4")
@@ -9,20 +9,20 @@ block content
       source(src="", type="video/ogg")
     button#actionBtn Start Recording
 
-  form(enctype="multipart/form-data", method="POST")
-    label(for="video") Video File
-    input(name="video", id="video", type="file", accept="video/*", required)
-
-    label(for="thumb") Thumbnail File
-    input(name="thumb", id="thumb", type="file", accept="image/*")
-    
-    input(name="title", placeholder="Title", type="text", max=80, required)
-    input(name="description", placeholder="Description", min=20, type="text", required)
-    input(name="hashtags", placeholder="Hashtags, separated by comma", type="text", required)
-    input(value="Upload Video", type="submit")
-
-  if errorMsg 
-    span=errorMsg
-
+    form(enctype="multipart/form-data", method="POST")
+      div.video
+        label(for="video") Video File
+        input(name="video", id="video", type="file", accept="video/*", required)
+      div.thumbnail
+        label(for="thumb") Thumbnail File
+        input(name="thumb", id="thumb", type="file", accept="image/*")
+      div.desc
+        div Video Information
+        input(name="title", placeholder="Title", type="text", max=80, required)
+        input(name="description", placeholder="Description", min=20, type="text", required)
+        input(name="hashtags", placeholder="Hashtags, separated by comma", type="text", required)
+      input.submit(value="Upload Video", type="submit")
+      if errorMsg 
+        span=errorMsg
 block scripts
   script(src="/assets/js/recorder.js")

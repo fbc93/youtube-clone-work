@@ -4,4 +4,18 @@ main {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
+  .empty_container {
+    max-width:1024px;
+    height: 100%;
+    padding:0 20px;
+    margin:auto;
+    box-sizing: border-box;
+
+    .empty_list {
+      text-align: center;
+      height: 10vh;
+      line-height: 10vh;
+      font-size: 2rem;
+    }
+  }
 }

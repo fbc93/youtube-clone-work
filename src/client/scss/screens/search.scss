@@ -1,0 +1,47 @@
+main {
+  .container_search {
+    max-width: 1024px;
+    margin: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    form {
+      display: flex;
+      justify-content: space-between;
+      width: 600px;
+      margin: auto auto 5em auto;
+
+      .search {
+        width: calc(100% - 140px);
+        border-radius: 3px;
+        display: inline-block;
+        border:none;
+        padding: 0 20px;
+        box-sizing: border-box;
+        font-size: 1.8rem;
+      }
+      .submit {
+        width: 120px;
+        height: 45px;
+        background-color: tomato;
+        border: none;
+        border-radius: 3px;
+        color: white;
+        font-size: 1.8rem;
+        font-weight: bold;
+        cursor:pointer;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .result_container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

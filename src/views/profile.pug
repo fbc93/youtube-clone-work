@@ -1,16 +1,23 @@
 extends base
 block content 
-  if errorMsg
-    div=errorMsg
-
-  img(src="/" + loggedInUser.avatarUrl, alt="user profile", width=200)
-  form(enctype="multipart/form-data", method="POST")
-    label(for="avatar") 프로필사진
-    input(name="avatar", id="avatar", type="file", accept="image/*")
-    input(name="username", type="text", value=loggedInUser.username, placeholder="Username", required)
-    input(name="email", type="email", value=loggedInUser.email, placeholder="Email", required)
-    input(name="name", type="text", value=loggedInUser.name, placeholder="Name", required)
-    input(name="location", type="text", value=loggedInUser.location, placeholder="Location")
-    input(type="submit", value="Update Profile")
-    hr
-    a(href="change-password") 비밀번호 변경하기 &rarr;
+  div.profile_container
+    div.current_profile
+      if loggedInUser.avatarUrl === undefined
+        div.empty_avatar Profile Image
+      else
+        img(src="/" + loggedInUser.avatarUrl, alt="user profile")
+        
+    if errorMsg
+        div.errMsg=errorMsg
+    form(enctype="multipart/form-data", method="POST")
+      div.user_avatar
+        label(for="avatar") 프로필사진
+        input(name="avatar", id="avatar", type="file", accept="image/*")
+      div.user_info
+        div 사용자 정보
+        input(name="username", type="text", value=loggedInUser.username, placeholder="Username", required)
+        input(name="email", type="email", value=loggedInUser.email, placeholder="Email", required)
+        input(name="name", type="text", value=loggedInUser.name, placeholder="Name", required)
+        input(name="location", type="text", value=loggedInUser.location, placeholder="Location")
+      a.change_password(href="change-password") 비밀번호 변경하기 &rarr;
+      input.submit(type="submit", value="Update Profile")

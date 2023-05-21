@@ -2,14 +2,19 @@ extends base
 include mixins/video
 
 block content 
-  h1=user.name
-  img(src="/" + user.avatarUrl ? user.avatarUrl : "", width=200, alt="user image")
-  div=user.username 
-  div=user.email 
-  div=user.location
-
-  each video in user.videos 
-    +video(video)
-      
-  else 
-    li  Sorry Nothing Found.
+  div.userInfo_container
+    div.title 📌 #{pageTitle}
+    div.user_info
+      div.user_avatar
+        if user.avatarUrl
+          div(style=`background-image: url(/${user.avatarUrl})`)
+      div.user_desc
+        div.username 유저네임 / #{user.username}
+        div.email 이메일 / #{user.email}
+        div.location 로케이션 / #{user.location}
+    div.title 📌 업로드한 영상
+    div.user_videos
+      each video in user.videos 
+        +video(video)
+    if user.videos.length === 0 
+      div.empty_list Sorry Nothing Found.

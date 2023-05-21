@@ -7,14 +7,14 @@ const addComment = (text, newCommentId) => {
 
   const newComment = document.createElement("li");
   const deleteBtn = document.createElement("span");
-  const updateBtn = document.createElement("span");
+  //const updateBtn = document.createElement("span");
   const comment__text = document.createElement("div");
   const comment__edit = document.createElement("div");
 
   newComment.className = "video__comment";
   deleteBtn.className = "deleteBtn";
   deleteBtn.onclick = deleteComment;
-  updateBtn.className = "updateBtn";
+  //updateBtn.className = "updateBtn";
   comment__text.className = "comment__text";
   comment__edit.className = "comment__edit";
 
@@ -22,10 +22,10 @@ const addComment = (text, newCommentId) => {
   
   comment__text.innerText = text;
   deleteBtn.innerText = "❌";
-  updateBtn.innerText = "✏️";
+  //updateBtn.innerText = "✏️";
 
   comment__edit.appendChild(deleteBtn);
-  comment__edit.appendChild(updateBtn);
+  //comment__edit.appendChild(updateBtn);
 
   newComment.appendChild(comment__text);
   newComment.appendChild(comment__edit);

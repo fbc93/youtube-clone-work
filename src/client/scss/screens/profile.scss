@@ -1,0 +1,115 @@
+main {
+  .profile_container {
+    max-width: 1024px;
+    margin: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    .errMsg {
+      text-align: center;
+      font-size: 1.5rem;
+      color: tomato;
+      padding: 20px 0;
+      width: 600px;
+      margin: auto;
+      box-sizing: border-box;
+    }
+
+    .current_profile {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: auto auto 5em auto;
+      display: flex;
+      background-color: #333333;
+      & > img {
+        width: 100%;
+      }
+
+      .empty_avatar {
+        width: 100%;
+        align-self: center;
+        text-align: center;
+        font-size:1.5rem;
+        font-weight:bold;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 600px;
+      margin: auto auto auto auto;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user_avatar {
+        margin-bottom: 2em;
+        label {
+          margin-bottom:0.5em;
+          font-size:1.8rem;
+        }
+
+        input {
+          background-color: #333333;
+          padding:15px;
+          border-radius: 5px;
+          color:white;
+        }
+      }
+      .user_info {
+        margin-bottom: 1em;
+        & > div:first-child {
+          margin-bottom:0.5em;
+          font-size:1.8rem;
+        }
+        input {
+          background-color: #333333;
+          padding:15px;
+          border-radius: 5px;
+          border:none;
+          margin-bottom:0.5em;
+          color:white;
+          &:last-child {
+            margin-bottom:0;
+          }
+        }
+      }
+
+      .change_password {
+        margin-bottom:2em;
+        font-size:1.4rem;
+        text-align:center;
+        padding:20px;
+        border-radius: 5px;
+        color:white;
+        background-color: #999999;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+
+      .submit {
+        padding:20px;
+        background-color: tomato;
+        text-align:center;
+        border:none;
+        border-radius: 5px;
+        color:white;
+        font-size:1.8rem;
+        font-weight:bold;
+        cursor:pointer;
+        &:hover{
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
+}
