@@ -83,21 +83,24 @@ export const getEdit = async (req, res) => {
 
 export const postEdit = async (req, res) => {
   const { 
-    params: {id}, 
-    body:{title, description, hashtags},
-    session: { user: { _id } } 
+    session: { user: { _id } }, 
+    params: { id }, 
+    body:{ title, description, hashtags },
   } = req;
-  const video = await Video.exists({_id:id});
 
-  if(!video){
+  const isVideoExist = await Video.exists({ _id: id });
+  const video = await Video.findById(id);
+
+  if(!isVideoExist){
     return res.status(404).render("404", {pageTitle: "Video Not Found."});
   }
 
+  //세션유저와 비디오 업로더가 같은 사람인지 확인
   if(String(video.owner) !== String(_id)){
     return res.status(403).redirect("/");
   }
 
-  await Video.findByIdAndUpdate(id,{
+  await Video.findByIdAndUpdate(id, {
     title,
     description,
     hashtags: Video.formatHashtags(hashtags),
