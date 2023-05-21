@@ -1,6 +1,7 @@
 import User from "../models/User";
 import Video from "../models/Video";
 import bcrypt from "bcrypt";
+const isHeroku = process.env.NODE_ENV === "production";
 
 export const getJoin = (req, res) => {
   return res.render("join", {pageTitle:"Create Account"});
@@ -99,9 +100,6 @@ export const postProfile = async (req, res) => {
     file,
   } = req;
 
-  console.log(file.location)
-
-
   const userNameExists = username != sessionUsername ? await User.exists({ username }) : undefined;
   const emailExists = email != sessionEmail ? await User.exists({ email }) : undefined;
 
@@ -116,7 +114,7 @@ export const postProfile = async (req, res) => {
   try {
   //db update
   const updatedUser = await User.findByIdAndUpdate(_id, {
-    avatarUrl: file ? file.location : avatarUrl,
+    avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl,
     username,
     email,
     name,
