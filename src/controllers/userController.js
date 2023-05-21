@@ -54,18 +54,20 @@ export const getLogin = (req, res) => {
 };
 
 export const postLogin = async (req, res) => {
-  const {body:{username, password}} = req;
-  const user = await User.findOne({username});
-  const ok = await bcrypt.compare(password, user.password);
+  const {
+    body:{username, password}
+  } = req;
   const pageTitle = "Login";
-
+  const user = await User.findOne({ username });
+  
   if(!user){
     return res.status(400).render("login", {
       pageTitle, 
       errorMsg: "An account with this username does not exists.",
-  
     });
   }
+  
+  const ok = await bcrypt.compare(password, user.password);
 
   if(!ok){
     return res.status(400).render("login", {
@@ -138,8 +140,8 @@ export const postProfile = async (req, res) => {
 
 export const logout = (req, res) => {
   req.session.destroy();
-  console.log("User Logout 🚪")
-  return res.redirect("/");
+  console.log("User Logout 🚪");
+  return res.redirect("/login");
 };
 
 export const getChangePassword = (req, res) => {

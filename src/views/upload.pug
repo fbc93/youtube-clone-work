@@ -19,7 +19,7 @@ block content
       div.desc
         div Video Information
         input(name="title", placeholder="Title", type="text", max=80, required)
-        input(name="description", placeholder="Description", min=20, type="text", required)
+        input(name="description", placeholder="Description", min=5, type="text", required)
         input(name="hashtags", placeholder="Hashtags, separated by comma", type="text", required)
       input.submit(value="Upload Video", type="submit")
       if errorMsg 
