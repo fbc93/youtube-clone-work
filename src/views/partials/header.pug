@@ -21,6 +21,6 @@ header.header
           a.avatar(href=`/users/${loggedInUser._id}`)
             if loggedInUser.avatarUrl === undefined 
               div.emptyAvatar
-            else
-              div.userAvatar(style=`background-image: url(/${loggedInUser.avatarUrl})`)
+            else if loggedInUser.avatarUrl
+              div.userAvatar(style=`background-image: url("${loggedInUser.avatarUrl}")`)
               

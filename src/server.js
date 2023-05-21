@@ -46,6 +46,18 @@ app.use((req, res, next) => {
   next();
 });
 
+//aws cross origin
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header(
+  "Access-Control-Allow-Headers",
+  "Origin, X-Requested-With, Content-Type, Accept"
+);
+  res.header("Cross-Origin-Embedder-Policy", "credentialless");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
+
 //Routers
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));

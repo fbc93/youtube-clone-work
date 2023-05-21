@@ -7,7 +7,7 @@ block content
     div.user_info
       div.user_avatar
         if user.avatarUrl
-          div(style=`background-image: url(/${user.avatarUrl})`)
+          div(style=`background-image: url(${user.avatarUrl})`)
       div.user_desc
         div.username 유저네임 / #{user.username}
         div.email 이메일 / #{user.email}

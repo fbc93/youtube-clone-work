@@ -5,10 +5,10 @@ block content
     div#videoContainer(data-videoId=video._id)
       div.video_player
         video.view(width=500, height=300)#video Sorry, Not supported Video
-          source(src="/" + video.fileUrl, type="video/webm")
-          source(src="/" + video.fileUrl, type="video/mp4")
-          source(src="/" + video.fileUrl, type="video/quicktime")
-          source(src="/" + video.fileUrl, type="video/ogg")
+          source(src=video.fileUrl, type="video/webm")
+          source(src=video.fileUrl, type="video/mp4")
+          source(src=video.fileUrl, type="video/quicktime")
+          source(src=video.fileUrl, type="video/ogg")
         div.control
           div.time_range
             input(type="range", step=1, value=0, min=0)#timeline 
@@ -31,7 +31,7 @@ block content
           div.owner_profile
             a.owner_avatar(href=`/users/${video.owner._id}`)
               if video.owner.avatarUrl
-                div.profile_image(style=`background-image:url(/${video.owner.avatarUrl})`)
+                div.profile_image(style=`background-image:url(${video.owner.avatarUrl})`)
           div.owner_info #{video.owner.name}
         div.video
           ul.hashtags 

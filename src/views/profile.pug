@@ -2,10 +2,10 @@ extends base
 block content 
   div.profile_container
     div.current_profile
-      if loggedInUser.avatarUrl === undefined
+      if !loggedInUser.avatarUrl
         div.empty_avatar Profile Image
       else
-        img(src="/" + loggedInUser.avatarUrl, alt="user profile")
+        img(src=loggedInUser.avatarUrl, alt="user profile")
         
     if errorMsg
         div.errMsg=errorMsg
